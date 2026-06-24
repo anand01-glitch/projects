@@ -1,11 +1,7 @@
+import TodoDashboard from "../../components/TodoDashboard";
+
 function Home() {
-
-
-    return (
-
-        <>
-        <h1>Home page</h1>
-        </>
-    )
+  return <TodoDashboard />;
 }
-export default Home
+
+export default Home;
