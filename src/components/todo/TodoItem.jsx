@@ -1,6 +1,17 @@
 import { useState } from "react";
 
-function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
+function TodoItem({
+  todo,
+  onToggle,
+  onUpdate,
+  onDelete,
+  draggingId,
+  dragOverId,
+  onDragStart,
+  onDragOver,
+  onDragEnd,
+  onDrop,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState(todo.title);
 
@@ -13,8 +24,28 @@ function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
     setIsEditing(false);
   };
 
+  const dragging = draggingId === todo.id;
+  const dragTarget = dragOverId === todo.id && draggingId !== todo.id;
+
   return (
-    <li className={`todo-item ${todo.completed ? "todo-completed" : ""}`}>
+    <li
+      className={`todo-item ${todo.completed ? "todo-completed" : ""} ${dragging ? "dragging" : ""} ${dragTarget ? "drag-target" : ""}`}
+      draggable
+      onDragStart={(event) => {
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", todo.id);
+        onDragStart(todo.id);
+      }}
+      onDragOver={(event) => {
+        event.preventDefault();
+        onDragOver(todo.id);
+      }}
+      onDrop={(event) => {
+        event.preventDefault();
+        onDrop(todo.id);
+      }}
+      onDragEnd={onDragEnd}
+    >
       <div className="todo-item-main">
         <label className="todo-checkbox">
           <input

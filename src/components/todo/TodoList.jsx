@@ -1,6 +1,18 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos, loading, onToggle, onUpdate, onDelete }) {
+function TodoList({
+  todos,
+  loading,
+  onToggle,
+  onUpdate,
+  onDelete,
+  draggingId,
+  dragOverId,
+  onDragStart,
+  onDragOver,
+  onDragEnd,
+  onDrop,
+}) {
   if (loading) {
     return (
       <div className="todo-empty-state">
@@ -31,6 +43,12 @@ function TodoList({ todos, loading, onToggle, onUpdate, onDelete }) {
           onToggle={onToggle}
           onUpdate={onUpdate}
           onDelete={onDelete}
+          draggingId={draggingId}
+          dragOverId={dragOverId}
+          onDragStart={onDragStart}
+          onDragOver={onDragOver}
+          onDragEnd={onDragEnd}
+          onDrop={onDrop}
         />
       ))}
     </ul>
